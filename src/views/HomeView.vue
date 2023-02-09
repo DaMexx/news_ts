@@ -36,11 +36,7 @@ onMounted(() => {
     <div>{{ getUserName }}</div>
     <div>USER {{ user }}</div>
     <div class="posts-container">
-      <Post 
-        v-for="post in posts" 
-        :key="post.id" 
-        :post="post" 
-      />
+      <Post v-for="post in posts" :key="post.id" :post="post" />
     </div>
     <SingUp v-if="props.showSingUp" />
     <br>
@@ -49,6 +45,15 @@ onMounted(() => {
   </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+main {
+  max-width: 960px;
+  margin: 0 auto;
+}
 
+.posts-container {
+
+  display: grid;
+  grid-template-columns: repeat(3fr);
+}
 </style>

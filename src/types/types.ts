@@ -21,10 +21,10 @@ export type loginType = {
   id: number;
   title: string;
   content: string;
-  image?: string | null;
   user_id: number;
   user: userType;
+  tags: string[];
   created_at?: string;
   updated_at?: string;
-  tags: string[];
+  image?: string | null;
  }
