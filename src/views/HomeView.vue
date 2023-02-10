@@ -4,12 +4,13 @@ import { storeToRefs } from 'pinia';
 import { useAuthStore } from "@/stores/auth";
 import { usePostsStore } from "@/stores/posts";
 import SingUp from "@/components/home/SingUp.vue";
+import SingIn from "@/components/home/SingIn.vue";
 import Post from "@/components/Post.vue"
 import type { userType, registrationType } from "@/types/types";
 
 const authStore = useAuthStore();
 const postsStore = usePostsStore();
-const { user, getUserName } = storeToRefs(authStore);
+const { user, getUserName, showSingUp, showSingIn } = storeToRefs(authStore);
 const { posts } = storeToRefs(postsStore);
 const { validate } = authStore;
 const { fetchPosts } = postsStore;
@@ -19,10 +20,10 @@ interface Props {
   showSingIn?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  showSingUp: false,
-  showSingIn: false
-})
+// const props = withDefaults(defineProps<Props>(), {
+//   showSingUp: true,
+//   showSingIn: false
+// })
 
 onMounted(() => {
   validate();
@@ -38,7 +39,8 @@ onMounted(() => {
     <div class="posts-container">
       <Post v-for="post in posts" :key="post.id" :post="post" />
     </div>
-    <SingUp v-if="props.showSingUp" />
+    <SingUp v-if="showSingUp" />
+    <SingIn v-if="showSingIn" />
     <br>
     <br>
     <br>
@@ -46,11 +48,6 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-main {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
 .posts-container {
 
   display: grid;

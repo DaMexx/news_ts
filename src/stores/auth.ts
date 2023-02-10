@@ -10,9 +10,17 @@ const VALIDATE_ENDPOINT: string = "/validate";
 export const useAuthStore = defineStore("auth", () => {
   const token = ref<string | null>(localStorage.getItem("user_token") || null);
   const user = ref<userType | null>(null);
-
+  const showSingUp = ref<boolean>(false);
+  const showSingIn = ref<boolean>(false);
   const getUserName = computed(() => user.value?.name);
   const isLogin = computed(() => token.value);
+
+  function toogleSingUp(status: boolean): void {
+    showSingUp.value = status;
+  }
+  function toogleSingIn(status: boolean): void {
+    showSingIn.value = status;
+  }
 
   async function registrationAction(authForm: registrationType) {
     await axios.post(REGISTRATION_ENDPOINT, authForm).then((response) => {
@@ -23,11 +31,13 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   async function validate() {
+    console.log('islogin', isLogin);
+    
     const headers = {
       Accept: "application/json",
       Authorization: `Bearer ${token.value}`,
     };
-    if (isLogin) {
+    if (isLogin.value) {
       await axios
         .post(VALIDATE_ENDPOINT, {}, { headers })
         .then((response) => (user.value = response.data));
@@ -42,6 +52,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   async function logOut() {
     user.value = null;
+    token.value = null;
     localStorage.removeItem("user_token");
   }
 
@@ -49,9 +60,14 @@ export const useAuthStore = defineStore("auth", () => {
     token,
     user,
     getUserName,
+    isLogin,
+    showSingUp,
+    showSingIn,
     loginRequest,
     registrationAction,
     validate,
     logOut,
+    toogleSingUp,
+    toogleSingIn,
   };
 });
