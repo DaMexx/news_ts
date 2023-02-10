@@ -18,16 +18,17 @@ const props = defineProps<Props>()
     <div class="post">
         <img class="post__img" :src="props.post.image ?? ''" alt="post.image">
         <div class="post__title">{{ props.post.title }}</div>
-        <div class="post__content">{{ props.post.content }}</div>
+        <span class="post__content">{{ props.post.content }}</span>
     </div>
 </template>
 <style scoped lang="scss">
 .post {
     display: flex;
     flex-direction: column;
-    max-width: 300px;
-    padding: 10px 20px;
-
+    max-width: 100%;
+    padding: 20px;
+    background-color: aliceblue;
+    border-radius: 30px;
     &__img {
         max-width: 100%;
     }

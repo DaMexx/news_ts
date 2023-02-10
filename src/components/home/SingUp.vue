@@ -5,7 +5,7 @@ import type { userType, registrationType } from "@/types/types";
 
 const validationErrors = ref([]);
 const authStore = useAuthStore();
-const { registrationAction, toogleSingUp } = authStore;
+const { registrationAction, toggleSingUp } = authStore;
 const registrationForm = reactive<registrationType>({
     email: '',
     name: '',
@@ -16,24 +16,26 @@ const submitForm = (): void => {
     registrationForm.email = '';
     registrationForm.password = '';
     registrationForm.name = '';
-
+    setTimeout(() => {
+        toggleSingUp(false)
+    }, 1000)
 }
 function validateRegistrationForm(): void {
 }
 </script>
 <template>
-    <form class="registration-form" @submit.prevent="submitForm" @blur="toogleSingUp(false)">
+    <form class="registration-form" @submit.prevent="submitForm" @blur="toggleSingUp(false)">
         <h1 class="registration-form__title">Registration</h1>
         <div class="registration-form__item">
-            <label class="registration-form__lable">Email: </label>
+            <label class="registration-form__label">Email: </label>
             <input class="registration-form__input" v-model.trim="registrationForm.email" type="email">
         </div>
         <div class="registration-form__item">
-            <label class="registration-form__lable">Name: </label>
+            <label class="registration-form__label">Name: </label>
             <input class="registration-form__input" v-model.trim="registrationForm.name" type="text">
         </div>
         <div class="registration-form__item">
-            <label class="registration-form__lable">Password: </label>
+            <label class="registration-form__label">Password: </label>
             <input class="registration-form__input" v-model.trim="registrationForm.password" type="password">
         </div>
         <button class="registration-form__button">Send</button>
@@ -57,7 +59,7 @@ function validateRegistrationForm(): void {
         text-align: center;
     }
 
-    &__lable {
+    &__label {
         display: inline-block;
     }
 

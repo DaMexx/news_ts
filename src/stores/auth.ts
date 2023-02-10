@@ -15,10 +15,10 @@ export const useAuthStore = defineStore("auth", () => {
   const getUserName = computed(() => user.value?.name);
   const isLogin = computed(() => token.value);
 
-  function toogleSingUp(status: boolean): void {
+  function toggleSingUp(status: boolean): void {
     showSingUp.value = status;
   }
-  function toogleSingIn(status: boolean): void {
+  function toggleSingIn(status: boolean): void {
     showSingIn.value = status;
   }
 
@@ -27,11 +27,13 @@ export const useAuthStore = defineStore("auth", () => {
       user.value = response.data.user;
       localStorage.setItem("user_token", response.data.token);
       token.value = response.data.token;
+    }).then(()=>{
+      showSingUp.value = false
     });
   }
 
   async function validate() {
-    console.log('islogin', isLogin);
+    console.log('islogin', isLogin.value);
     
     const headers = {
       Accept: "application/json",
@@ -46,7 +48,12 @@ export const useAuthStore = defineStore("auth", () => {
   async function loginRequest(loginForm: loginType) {
     axios.post(LOGIN_ENDPOINT, loginForm).then((response) => {
       user.value = response.data.user;
+      localStorage.setItem("user_token", response.data.token);
       token.value = response.data.token;
+    }).then(()=>{
+      showSingIn.value = false
+    }).catch((error)=>{
+      console.error(error);
     });
   }
 
@@ -67,7 +74,7 @@ export const useAuthStore = defineStore("auth", () => {
     registrationAction,
     validate,
     logOut,
-    toogleSingUp,
-    toogleSingIn,
+    toggleSingUp,
+    toggleSingIn,
   };
 });

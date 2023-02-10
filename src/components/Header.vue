@@ -5,10 +5,7 @@ import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore();
 const { user, getUserName, isLogin } = storeToRefs(authStore);
-const { logOut,  toogleSingUp, toogleSingIn } = authStore;
-
-
-
+const { logOut, toggleSingUp, toggleSingIn } = authStore;
 
 </script>
 <template>
@@ -17,10 +14,13 @@ const { logOut,  toogleSingUp, toogleSingIn } = authStore;
             <RouterLink class="link" to="/">Home</RouterLink>
             <RouterLink class="link" to="/about">About</RouterLink>
         </nav>
-        <div class="login-container">
-            <button v-if="!isLogin" class="login-container__item" @click="toogleSingUp(true)">Sing up</button>
-            <button v-if="!isLogin" class="login-container__item" @click="toogleSingIn(true)">Sing in</button>
-            <button v-if="isLogin" class="log-out" @click="logOut">logOut</button>
+        <div v-if="!isLogin" class="login-container">
+            <button class="login-container__item" @click="toggleSingUp(true)">Sing up</button>
+            <button class="login-container__item" @click="toggleSingIn(true)">Sing in</button>
+        </div>
+        <div v-if="isLogin" class="login-container">
+            <div>Hello, {{ getUserName }}</div>
+            <button class="log-out" @click="logOut">logOut</button>
         </div>
     </header>
 </template>
@@ -29,6 +29,7 @@ const { logOut,  toogleSingUp, toogleSingIn } = authStore;
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     .link {
         padding-right: 10px;
@@ -39,6 +40,7 @@ const { logOut,  toogleSingUp, toogleSingIn } = authStore;
     .login-container {
         display: flex;
         gap: 5px;
+        align-items: center;
 
         &__item {
             display: inline-block;

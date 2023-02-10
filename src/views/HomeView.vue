@@ -34,8 +34,6 @@ onMounted(() => {
 
 <template>
   <main>
-    <div>{{ getUserName }}</div>
-    <div>USER {{ user }}</div>
     <div class="posts-container">
       <Post v-for="post in posts" :key="post.id" :post="post" />
     </div>
@@ -49,8 +47,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .posts-container {
-
   display: grid;
-  grid-template-columns: repeat(3fr);
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  padding: 10px 15px;
 }
 </style>
