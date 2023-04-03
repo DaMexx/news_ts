@@ -17,7 +17,7 @@ export type loginType = {
   email: string;
   password: string;
 };
- export type postType = {
+export type postType = {
   id: number;
   title: string;
   content: string;
@@ -27,4 +27,4 @@ export type loginType = {
   created_at?: string;
   updated_at?: string;
   image?: string | null;
- }
+};
